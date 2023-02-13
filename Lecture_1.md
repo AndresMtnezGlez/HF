@@ -43,17 +43,22 @@ $$
 It is important to realize that $x_t$ es exogeneous. This implies that it has no information on $\mathrm{h}_{t+s}$ or $w_{t+s}$ for $\mathrm{s}=0,1,2, \ldots$ beyond that contained in $y_{t-1}$
 
 The state equation implies that $h$, can be written as a linear function of $\left( h_1,  \mathbf{v}_2, \mathbf{v}_3, \ldots, \mathbf{v}_r\right)$
+
+
 $$
 \begin{gathered}
 h_t=\mathbf{v}_t+\mathbf{F} \mathbf{v}_{t-1}+\mathbf{F}^2 \mathbf{v}_{t-2}+\cdots+\mathbf{F}^{\prime-2} \mathbf{v}_2+\mathbf{F}^{t-1} h_1 \\
 \text { for } t=2,3, \ldots, T
 \end{gathered}
 $$
+
 Thus, it implies that $v$, is uncorrelated with lagged values of $h$ :
+
 $$
 E\left(v_t h_\tau^{\prime}\right)=0 \quad \text { for } \tau=t-1, t-2, \ldots, 1 .
 $$
 Simitariy,
+
 $$
 \begin{aligned}
 & E\left(\mathbf{w}_t h_\tau^{\prime}\right)=\boldsymbol{\theta} \text { for } \tau=1,2, \ldots, T \\
@@ -63,6 +68,8 @@ $$
 &
 \end{aligned}
 $$
+
+
 
 
 > **_NOTE:_**  Examples of State-Space Representations
