@@ -1,8 +1,263 @@
-# 1. Introduction and probability
+# 1. Dynamic Factor Models
 
-* aux alsfkjlasfk
+The Kalman filter is a recursive algorithm for estimating the latent state of a linear dynamical system conditioned on the observations.
 
-$$x+11= $$
+We have a vector $y_t$ of dimension $(n x 1)$. Suppose we have $(r x 1)$ non observables variable, $h_t$ which are important to model this vector in such a way that we can write, where $x_t$ are $k$ explanatory exogeneous variables:
+
+$$
+\begin{align*}
+y_t &= A'x_t + H'h_t +w_t  \quad Observation \quad Eq. \\
+h_{t+1} &= Fh_{t} + v_{t+1}  \quad \quad \quad \quad \quad \quad \quad State\quad Eq.
+\end{align*}
+$$
+
+The dimension of the matrices are :
+$$
+\begin{aligned}
+& F=(r x r) \\
+& A^{\prime}=(n x k) \\
+& H^{\prime}=(n x r)
+\end{aligned}
+$$
+
+Vectors $w_t$ and $v_t$ are white noise and:
+
+$$
+\begin{aligned}
+& E\left(\mathbf{v}_\tau \mathbf{v}_\tau^{\prime}\right)= \begin{cases}\mathbf{Q} & \text { for } t=\tau \\
+0 & \text { otherwise }\end{cases} \\
+& E\left(\mathbf{w}_t \mathbf{w}_\tau^{\prime}\right)= \begin{cases}\mathbf{R} & \text { for } t=\tau \\
+0 & \text { otherwise }\end{cases}
+\end{aligned}
+$$
+
+The dimension of $R$ y $Q$ are $(n x n)$ y $(r x r)$. The disturbances
+v, and w, are assumed to be uncorrelated at all lags:
+
+$$
+\begin{aligned}
+E\left(v_t w_\tau^{\prime}\right)=0 \quad for\quad all \quad t,\quad and \quad \tau
+\end{aligned}
+$$
+
+It is important to realize that $x_t$ es exogeneous. This implies that it has no information on $\mathrm{h}_{t+s}$ or $w_{t+s}$ for $\mathrm{s}=0,1,2, \ldots$ beyond that contained in $y_{t-1}$
+
+The state equation implies that $h$, can be written as a linear function of $\left( h_1,  \mathbf{v}_2, \mathbf{v}_3, \ldots, \mathbf{v}_r\right)$
+$$
+\begin{gathered}
+h_t=\mathbf{v}_t+\mathbf{F} \mathbf{v}_{t-1}+\mathbf{F}^2 \mathbf{v}_{t-2}+\cdots+\mathbf{F}^{\prime-2} \mathbf{v}_2+\mathbf{F}^{t-1} h_1 \\
+\text { for } t=2,3, \ldots, T
+\end{gathered}
+$$
+Thus, it implies that $v$, is uncorrelated with lagged values of $h$ :
+$$
+E\left(v_t h_\tau^{\prime}\right)=0 \quad \text { for } \tau=t-1, t-2, \ldots, 1 .
+$$
+Simitariy,
+$$
+\begin{aligned}
+& E\left(\mathbf{w}_t h_\tau^{\prime}\right)=\boldsymbol{\theta} \text { for } \tau=1,2, \ldots, T \\
+& E\left(\mathbf{w}_{,} \mathbf{y}_\tau^{\prime}\right)=E\left[\mathbf{w}_{\boldsymbol{\prime}}\left(\mathbf{A}^{\prime} \mathbf{x}_{\boldsymbol{\tau}}+\mathbf{H}^{\prime} h_\tau+\mathbf{w}_\tau\right)^{\prime}\right] \\
+& =0 \text { for } \tau=t-1, t-2, \ldots, 1 \\
+& E\left(\mathbf{v}_t \mathbf{y}_\tau^{\prime}\right)=\mathbf{0} \quad \text { for } \tau=t-1, t-2, \ldots, 1 \text {. } \\
+&
+\end{aligned}
+$$
+
+
+> **_NOTE:_**  Examples of State-Space Representations
+> Consider a univariate $A R(p)$ process,
+> $$
+> \begin{aligned}
+> y_{t+1}-\mu= & \phi_1\left(y_t-\mu\right)+\phi_2\left(y_{t-1}-\mu\right)+\cdots \\
+> & \quad+\phi_p\left(y_{t-p+1}-\mu\right)+\varepsilon_{t+1}, \\
+> E\left(\varepsilon_t \varepsilon_\tau\right)= & \begin{cases}\sigma^2 & \text { for } > t=\tau \\
+> 0 & \text { otherwise. }\end{cases}
+> \end{aligned}
+> $$
+> This could be written in state-space form as follows:
+> State Equation $(r=p)$ :
+> $$
+> \begin{aligned}
+& {\left[\begin{array}{c}
+y_{t+1}-\mu \\
+y_t-\mu \\
+\vdots \\
+y_{t-p+2}-\mu
+\end{array}\right]} \\
+& \quad=\left[\begin{array}{ccccc}
+\phi_1 & \phi_2 & \cdots & \phi_{p-1} & \phi_p \\
+1 & 0 & \cdots & 0 & 0 \\
+0 & 1 & \cdots & 0 & 0 \\
+\vdots & \vdots & \cdots & \vdots & \vdots \\
+0 & 0 & \cdots & 1 & 0
+\end{array}\right]\left[\begin{array}{c}
+y_t-\mu \\
+y_{t-1}-\mu \\
+\vdots \\
+y_{t-p+1}-\mu
+\end{array}\right]+\left[\begin{array}{c}
+\varepsilon_{t+1} \\
+0 \\
+\vdots \\
+0
+\end{array}\right]
+\end{aligned}
+$$
+> Observation Equation ( $n=1)$ :
+> $$
+y_t=\mu+\left[\begin{array}{llll}
+1 & 0 & \cdots & 0
+\end{array}\right]\left[\begin{array}{c}
+y_t-\mu \\
+y_{t-1}-\mu \\
+\vdots \\
+y_{t-p+1}-\mu
+\end{array}\right] .
+$$
+> That is, we would specify
+> $$
+\begin{aligned}
+& h_t=\left[\begin{array}{c}
+y_t-\mu \\
+y_{t-1}-\mu \\
+\vdots \\
+y_{t-p+1}-\mu
+\end{array}\right] \quad \mathbf{F}=\left[\begin{array}{ccccc}
+\phi_1 & \phi_2 & \cdots & \phi_{p-1} & \phi_p \\
+1 & 0 & \cdots & 0 & 0 \\
+0 & 1 & \cdots & 0 & 0 \\
+\vdots & \vdots & \cdots & \vdots & \vdots \\
+0 & 0 & \cdots & 1 & 0
+\end{array}\right] \\
+& \mathbf{v}_{t+1}=\left[\begin{array}{c}
+\varepsilon_{t+1} \\
+0 \\
+\vdots \\
+0
+\end{array}\right] \quad \mathbf{Q}=\left[\begin{array}{cccc}
+\sigma^2 & 0 & \cdots & 0 \\
+0 & 0 & \cdots & 0 \\
+\vdots & \vdots & \cdots & \vdots \\
+0 & 0 & \cdots & 0
+\end{array}\right] \\
+& \mathbf{y}_t=y_t \quad \mathbf{A}^{\prime}=\mu \quad \mathbf{x}_t=1 \\
+& \mathbf{H}^{\prime}=\left[\begin{array}{llll}
+1 & 0 & \cdots & 0
+\end{array}\right] \quad \mathbf{w}_t=0 \quad \mathbf{R}=0 . \\
+&
+\end{aligned}
+$$
+
+
+Derivatoin of the Kalman Filter
+Consider the general state-space system, whose key equations are reproduced here for convenience:
+$$
+\begin{aligned}
+& \underset{(r \times 1)}{h_{r+1}}=\underset{(r \times r)(r \times 1)}{\mathbf{F} \cdot h_t}+\underset{(r \times 1)}{\mathbf{v}_{r+1}} \\
+& \underset{(n \times 1)}{\mathbf{y}_t}=\underset{(n \times k)(k \times 1)}{\mathbf{A}^{\prime} \cdot \mathbf{x}_t}+\underset{(n \times r)(r \times 1)}{\mathbf{H}^{\prime} \cdot h_1}+\underset{(n \times 1)}{\mathbf{w}_t} \\
+& E\left(\mathbf{v}_{,} \mathbf{v}_\tau^{\prime}\right)=\left\{\begin{array}{cl}
+\underset{(r \times r)}{\mathbf{Q}} & \text { for } t=\tau \\
+\mathbf{0} & \text { otherwise }
+\end{array}\right. \\
+& E\left(\mathbf{w}_t \mathbf{w}_\tau^{\prime}\right)=\left\{\begin{array}{cl}
+\mathbf{R} & \text { for } t=\tau \\
+\mathbf{0} \times(n) & \text { otherwise. }
+\end{array}\right. \\
+&
+\end{aligned}
+$$
+
+
+The analyst is presumed to have observed y1, y2, ... , YT, x 1, X2, .•. , XrOne of the ultimate objectives may be to estimate the values of any unknown
+parameters in the system on the basis of these observations. For now, however,
+we will assume that the particular numerical values of F, Q, A, H, and Rare known
+with certainty. There are many uses of the Kalman filter. It is motivated here as an algorithm for calculating linear least squares forecasts of the state vector on the basis of data observed through date t
+
+
+the econometrician observes yt
+; xt
+We have two problems:
+1) Calculation F; Q; A; H y R
+2) Calculation ht
+Let¥s start with 2 assuming that we know 1
+
+
+
+From previous equations:
+
+$E\left(v_t \mathrm{~h}_\tau^{\prime}\right)=0$ for each $\tau<t-1$
+$E\left(w_t \mathrm{~h}_\tau^{\prime}\right)=0$ for each $\tau=1 \ldots . T$
+$E\left(w_t y_\tau^{\prime}\right)=E\left(w_t\left(A^{\prime} x_\tau+H^{\prime} \mathrm{h}_\tau+w_\tau\right)^{\prime}\right)=0$ for each $\tau<t-1$
+$E\left(v_t y_\tau^{\prime}\right)=0$ for each $\tau<t-1$
+
+
+
+
+
+$$
+\left[\begin{array}{l}
+\Delta y_{1 t} \\
+\Delta y_{2 t} \\
+\Delta y_{3 t} \\
+\Delta y_{4 t}
+\end{array}\right]=\left[\begin{array}{llllllllll}
+\gamma_1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\gamma_2 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+\gamma_3 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+\gamma_4 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
+\end{array}\right]\left[\begin{array}{c}
+\Delta c_t \\
+\Delta c_{t-1} \\
+e_{1 t} \\
+e_{1 t-1} \\
+e_{2 t} \\
+e_{1 t-2} \\
+e_{3 t} \\
+e_{3 t-1} \\
+e_{4 t} \\
+e_{4 t-1}
+\end{array}\right]
+$$
+
+
+transition equation:
+$$
+\left[\begin{array}{c}
+\Delta c_t \\
+\Delta c_{t-1} \\
+e_{1 t} \\
+e_{1 t-1} \\
+e_{2 t} \\
+e_{2 t-1} \\
+e_{3 t} \\
+e_{3 t-1} \\
+c_{4 t} \\
+e_{4 t-1}
+\end{array}\right]=\left[\begin{array}{llllllllll}
+\phi_1 & \phi_2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & \psi_{11} & \psi_{12} & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & \psi_{21} & \psi_{22} & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & \psi_{31} & \psi_{32} & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \psi_{41} & \psi_{42} \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
+\end{array}\right]\left[\begin{array}{c}
+\Delta c_{t-1} \\
+\Delta c_{t-2} \\
+e_{1 t-1} \\
+e_{1 t-2} \\
+e_{2 t-1} \\
+e_{2 t-2} \\
+e_{3 t-1} \\
+e_{3 t-2} \\
+c_{4 t-1} \\
+e_{4 t-2}
+\end{array}\right]+
+$$
 
 
 * Modelling assumptions:
