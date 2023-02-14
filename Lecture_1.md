@@ -360,52 +360,22 @@ $$
 (I_r - F)E[h_{t}] = 0
 $$
 
-There are many ways to write a given system in state-space form. the $M A(1)$ process [13.1.16] can also be represented in this way:
-State Equation $(r=2)$ :
+Since unity is not an eigenvalue of $F$, the matrix $(I_r - F)$ is nonsingular, and this equation has the unique solution $E[h_t] = 0$ which is the same as saying $h_{0|0}=0$
+
+Then, for the unconditoinal variance of $h_t$ it can be calcualted from 1.2 mulptyling by $h_{t+1}'$ and taking unconditional expectations:
+
 $$
-\left[\begin{array}{c}
-\varepsilon_{t+1}+\theta \varepsilon_t \\
-\theta \varepsilon_{t+1}
-\end{array}\right]=\left[\begin{array}{ll}
-0 & 1 \\
-0 & 0
-\end{array}\right]\left[\begin{array}{c}
-\varepsilon_t+\theta \varepsilon_{t-1} \\
-\theta \varepsilon_t
-\end{array}\right]+\left[\begin{array}{c}
-\varepsilon_{t+1} \\
-\theta \varepsilon_{t+1}
-\end{array}\right]
-$$
-Observation Equation $(n=1)$ :
-$$
-y_t=\mu+\left[\begin{array}{ll}
-1 & 0
-\end{array}\right]\left[\begin{array}{c}
-\varepsilon_t+\theta \varepsilon_{t-1} \\
-\theta \varepsilon_t
-\end{array}\right] .
+\begin{aligned}
+& E\left(h_{t+1} h_{t+1}^{\prime}\right)=E\left(\left(F h_t+v_{t+1}\right)\left(F h_t+v_{t+1}\right)^{\prime}\right)= \\
+& =E\left(\left(F h_t+v_{t+1}\right)\left(h_t^{\prime} F^{\prime}+v_{t+1}^{\prime}\right)\right)=F E\left(h_t h_t^{\prime}\right) F^{\prime}+E\left(v_{t+1} v_{t+1}^{\prime}\right) \\
+\end{aligned}
 $$
 
+Calling:
+$$
+E\left(h_t h_t^{\prime}\right)=\sum
+$$
 
-
-
-
-
-
-
-
-
-
-
-
-
-From previous equations:
-
-$E\left(v_t \mathrm{~h}_\tau^{\prime}\right)=0$ for each $\tau<t-1$
-$E\left(w_t \mathrm{~h}_\tau^{\prime}\right)=0$ for each $\tau=1 \ldots . T$
-$E\left(w_t y_\tau^{\prime}\right)=E\left(w_t\left(A^{\prime} x_\tau+H^{\prime} \mathrm{h}_\tau+w_\tau\right)^{\prime}\right)=0$ for each $\tau<t-1$
-$E\left(v_t y_\tau^{\prime}\right)=0$ for each $\tau<t-1$
 
 
 
