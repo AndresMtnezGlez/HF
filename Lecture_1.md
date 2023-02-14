@@ -362,12 +362,28 @@ $$
 
 Since unity is not an eigenvalue of $F$, the matrix $(I_r - F)$ is nonsingular, and this equation has the unique solution $E[h_t] = 0$ which is the same as saying $h_{0|0}=0$
 
-Then, for the unconditoinal variance of $h_t$ it can be calcualted from 1.2 mulptyling by $h_{t+1}'$ and taking unconditional expectations:
+Then, for the unconditoinal variance of $h_t$ it can be calcualted from 
 
 $$
 \begin{aligned}
-& E\left(h_{t+1} h_{t+1}^{\prime}\right)=E\left(\left(F h_t+v_{t+1}\right)\left(F h_t+v_{t+1}\right)^{\prime}\right)= \\
-& =E\left(\left(F h_t+v_{t+1}\right)\left(h_t^{\prime} F^{\prime}+v_{t+1}^{\prime}\right)\right)=F E\left(h_t h_t^{\prime}\right) F^{\prime}+E\left(v_{t+1} v_{t+1}^{\prime}\right) \\
+ \underset{(r \times 1)}{h_{r+1}}=\underset{(r \times r)(r \times 1)}{\mathbf{F} \cdot h_t}+\underset{(r \times 1)}{\mathbf{v}_{r+1}} \\
+
+\end{aligned}
+$$
+
+By mulptyling by $h_{t+1}'$ and taking unconditional expectations on both sides:
+
+$$
+\begin{aligned}
+& E\left(h_{t+1} h_{t+1}^{\prime}\right)=E\left(\left(F h_t+v_{t+1}\right)\left(F h_t+v_{t+1}\right)^{\prime}\right)
+\end{aligned}
+$$
+
+
+$$
+\begin{aligned}
+
+& E\left(\left(F h_t+v_{t+1}\right)\left(h_t^{\prime} F^{\prime}+v_{t+1}^{\prime}\right)\right)=F E\left(h_t h_t^{\prime}\right) F^{\prime}+E\left(v_{t+1} v_{t+1}^{\prime}\right) \\
 \end{aligned}
 $$
 
@@ -375,6 +391,14 @@ Calling:
 $$
 E\left(h_t h_t^{\prime}\right)=\sum
 $$
+
+Given that the cross products have dissapiared in light of the assumtion that the errors are uncorrelated with lagged values of $h$. The previous equation cna be written as: 
+
+$$
+\sum = F \sum F' + Q
+$$
+
+The solution to this equation is: 
 
 
 
