@@ -202,12 +202,22 @@ $$
 
 Notice that the indpenedent variables have information content until $x_t$. 
 
-We can define then the MSE of dimension $(rxr)$ such as:
+ It is motivated here as an algorithm 
+for calculating linear least squares forecasts of the state vector on the basis of data observed through date t
+We can define then the MSE of dimension $(rxr)$ such as, the associated with each of these forecasts is a mean squared 
+error (MSE) matrix, r
 
 $$
 P_{t|t-1} = E[(h_t - h_{t|t-1})(h_t-h_{t|t-1})']
 $$
 
+Which is somehow similar to the classic MSE estimator for OLS
+
+$$
+\begin{equation*}
+\operatorname{MSE}(\hat{Y}) = \operatorname{E} \left [\left(\hat{Y}-\mu\right)\left(\hat{Y}-\mu\right)^T \right]
+\end{equation*}
+$$
 
 
 From previous equations:
