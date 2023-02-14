@@ -401,7 +401,7 @@ $$
 The solution to this equation is: 
 
 
-
+![Proposition_1](../assets/images/Proposition_1.JPG)
 
 
 
