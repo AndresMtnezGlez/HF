@@ -220,6 +220,186 @@ $$
 $$
 
 
+1.1.1 Calculation of $h_t$
+
+The recursion begins with $h_{1|0}$ whcih denotes a forecast of $h_1$ based on no observations of $y$ or $x$. This is just the unconditional mean of $h_1$ 
+
+$$
+h_{1|0} = E[h_1]
+$$
+
+with associated MSE 
+
+$$
+P_{1|0} = E[(h_1 - E[h_1])(h_1- E[h_1])']
+$$
+
+For example, consider the univariate $MA(1)$ process:
+
+$
+y_t = \mu + \varepsilon_t + +\theta\varepsilon_{t-1}
+$
+
+This could be written in state-space form as follwos 
+
+$$
+\begin{aligned}
+& \underset{(r \times 1)}{h_{r+1}}=\underset{(r \times r)(r \times 1)}{\mathbf{F} \cdot h_t}+\underset{(r \times 1)}{\mathbf{v}_{r+1}} \\
+& \underset{(n \times 1)}{\mathbf{y}_t}=\underset{(n \times k)(k \times 1)}{\mathbf{A}^{\prime} \cdot \mathbf{x}_t}+\underset{(n \times r)(r \times 1)}{\mathbf{H}^{\prime} \cdot h_1}+\underset{(n \times 1)}{\mathbf{w}_t} \\
+& E\left(\mathbf{v}_{,} \mathbf{v}_\tau^{\prime}\right)=\left\{\begin{array}{cl}
+\underset{(r \times r)}{\mathbf{Q}} & \text { for } t=\tau \\
+\mathbf{0} & \text { otherwise }
+\end{array}\right. \\
+& E\left(\mathbf{w}_t \mathbf{w}_\tau^{\prime}\right)=\left\{\begin{array}{cl}
+\mathbf{R} & \text { for } t=\tau \\
+\mathbf{0} \times(n) & \text { otherwise. }
+\end{array}\right. \\
+&
+\end{aligned}
+$$
+
+State Equation ( $r=2)$ :
+$$
+\left[\begin{array}{c}
+\varepsilon_{t+1} \\
+\varepsilon_t
+\end{array}\right]=\left[\begin{array}{ll}
+0 & 0 \\
+1 & 0
+\end{array}\right]\left[\begin{array}{c}
+\varepsilon_t \\
+\varepsilon_{t-1}
+\end{array}\right]+\left[\begin{array}{c}
+\varepsilon_{t+1} \\
+0
+\end{array}\right]
+$$
+Observation Equation $(n=1)$ :
+$$
+y_t=\mu+\left[\begin{array}{ll}
+1 & \theta
+\end{array}\right]\left[\begin{array}{c}
+\varepsilon_t \\
+\varepsilon_{t-1}
+\end{array}\right]
+$$
+
+That is:
+
+$$
+\begin{aligned}
+& \boldsymbol{h}_t=\left[\begin{array}{c}
+\varepsilon_t \\
+\varepsilon_{t-1}
+\end{array}\right] \quad \mathbf{F}=\left[\begin{array}{ll}
+0 & 0 \\
+1 & 0
+\end{array}\right] \quad \mathbf{v}_{t+1}=\left[\begin{array}{c}
+\varepsilon_{t+1} \\
+0
+\end{array}\right] \\
+& \mathbf{Q}=\left[\begin{array}{cc}
+\sigma^2 & 0 \\
+0 & 0
+\end{array}\right] \quad \mathbf{y}_t=y_t \quad \mathbf{A}^{\prime}=\mu \quad \mathbf{x}_t=1 \\
+& \mathbf{H}^{\prime}=\left[\begin{array}{ll}
+1 & \theta
+\end{array}\right] \quad \mathbf{w}_t=0 \quad \mathbf{R}=0 .
+\end{aligned}
+$$
+
+
+Therefore we may use our state vector: 
+
+$$
+\boldsymbol{h}_t=\left[\begin{array}{c}
+\varepsilon_t \\
+\varepsilon_{t-1}
+\end{array}\right]
+$$
+For which:
+
+$$
+\boldsymbol{h}_{1|0}= E\left[\begin{array}{c}
+\varepsilon_t \\
+\varepsilon_{t-1}
+\end{array}\right]=
+\left[\begin{array}{c}
+0 \\
+0
+\end{array}\right]
+$$
+
+Therefore: 
+
+$$
+\mathbf{P}_{1[0}=E\left(\left[\begin{array}{l}
+\varepsilon_1 \\
+\varepsilon_{01}
+\end{array}\right]\left[\begin{array}{ll}
+\varepsilon_1 & \left.\varepsilon_0\right]
+\end{array}\right]\right)=\left[\begin{array}{cc}
+\sigma^2 & 0 \\
+0 & \sigma^2
+\end{array}\right]
+$$
+
+Where $\sigma^2 = E[\varepsilon_t^2]$
+
+More generally, if eigenvalues of $F$ are all inside the unit circle, then the 
+process is covariance-stationary. The unconditional mean often 
+can be found by taking expectations of both sides of producing:
+
+$$
+E[h_{t+1}] = F \cdot E[h_t]
+$$
+
+Or since is covariance stationary: 
+
+$$
+(I_r - F)E[h_{t}] = 0
+$$
+
+There are many ways to write a given system in state-space form. the $M A(1)$ process [13.1.16] can also be represented in this way:
+State Equation $(r=2)$ :
+$$
+\left[\begin{array}{c}
+\varepsilon_{t+1}+\theta \varepsilon_t \\
+\theta \varepsilon_{t+1}
+\end{array}\right]=\left[\begin{array}{ll}
+0 & 1 \\
+0 & 0
+\end{array}\right]\left[\begin{array}{c}
+\varepsilon_t+\theta \varepsilon_{t-1} \\
+\theta \varepsilon_t
+\end{array}\right]+\left[\begin{array}{c}
+\varepsilon_{t+1} \\
+\theta \varepsilon_{t+1}
+\end{array}\right]
+$$
+Observation Equation $(n=1)$ :
+$$
+y_t=\mu+\left[\begin{array}{ll}
+1 & 0
+\end{array}\right]\left[\begin{array}{c}
+\varepsilon_t+\theta \varepsilon_{t-1} \\
+\theta \varepsilon_t
+\end{array}\right] .
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 From previous equations:
 
 $E\left(v_t \mathrm{~h}_\tau^{\prime}\right)=0$ for each $\tau<t-1$
