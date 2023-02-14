@@ -157,7 +157,7 @@ y_{t-p+1}-\mu
 $$
 
 
-Derivatoin of the Kalman Filter
+Derivation of the Kalman Filter
 Consider the general state-space system, whose key equations are reproduced here for convenience:
 $$
 \begin{aligned}
@@ -176,18 +176,37 @@ $$
 $$
 
 
-The analyst is presumed to have observed y1, y2, ... , YT, x 1, X2, .•. , XrOne of the ultimate objectives may be to estimate the values of any unknown
+The analyst is presumed to have observed $y_1, y_2, ... , Y_T, x_1, X_2, .. , X_T$. One of the ultimate objectives may be to estimate the values of any unknown
 parameters in the system on the basis of these observations. For now, however,
-we will assume that the particular numerical values of F, Q, A, H, and Rare known
-with certainty. There are many uses of the Kalman filter. It is motivated here as an algorithm for calculating linear least squares forecasts of the state vector on the basis of data observed through date t
+we will assume that the particular numerical values of $F, Q, A, H$ and $R$ are known
+with certainty. 
 
+There are many uses of the Kalman filter. It is motivated here as an algorithm for calculating linear least squares forecasts of the state vector on the basis of data observed through date $t$
 
-the econometrician observes yt
-; xt
-We have two problems:
-1) Calculation F; Q; A; H y R
-2) Calculation ht
-Let¥s start with 2 assuming that we know 1
+Therefore, the econometrician observes $y_t$
+; $xt$ and we have two problems:
+1) Calculation $F, Q, A, H$ and $R$
+2) Calculation $h_t$
+
+Let's start with 2 assuming that we know 1
+
+$$
+h_{t/t-1} = E[h_t|Y_{t-1}]
+$$
+
+Where $Y_{t-1}$ represents the information up to period t
+
+$$
+Y_{t-1} = (y_{t-1}, y_{t-2}, ...y_1 ,x_t, x_{t-1}, .. , x_1)
+$$
+
+Notice that the indpenedent variables have information content until $x_t$. 
+
+We can define then the MSE of dimension $(rxr)$ such as:
+
+$$
+P_{t|t-1} = E[(h_t - h_{t|t-1})(h_t-h_{t|t-1})']
+$$
 
 
 
