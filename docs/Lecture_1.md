@@ -463,6 +463,10 @@ Now let's see in general how the information is taken into the model
 in $t-1$ we know
 Yt
 
+## Updating the Inference About $h_t$
+
+
+
 
 
 $$
