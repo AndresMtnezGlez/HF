@@ -400,8 +400,68 @@ $$
 
 The solution to this equation is: 
 
+$$
+\begin{aligned}
+& \operatorname{vec}\left(\sum\right)=\left(I_{r^2}-(F \otimes F)\right)^{-1} \operatorname{vec}(Q) \\
+\end{aligned}
+$$
 
-![Proposition_1](../assets/images/Proposition_1.JPG)
+Thus, in general, provided that the eigenvalues of $F$ are inside the unit circle, the 
+Kalman filter iterations can be started with  $h_{1|0}= 0$ and $P_{1|0}$ the $(r x r)$ matrix 
+whose elements expressed as a column vector are given by 
+
+$$
+\operatorname{vec}\left(P_{1 / 0}\right)=\left(I_{r^2}-(F \otimes F)\right)^{-1} \operatorname{vec}(Q)
+$$
+
+
+Which comes from:
+
+![My Image](assets/images_v1/Proposition_1.JPG)
+
+## Forecasting
+
+Given starting values $h_{1 \mid 0}$ and $\mathbf{P}_{1 \mid 0}$, the next step is to calculate analogous magnitudes for the following date, $\hat{h}_{2 \mid 1}$ and $\mathbf{P}_{2 \mid 1}$. The calculations for $t=2,3$, ..,$T$ all have the same basic form, so we will describe them in general terms for step $t$; given $h_{t \mid t-1}$ and $\mathbf{P}_{t \mid,-1}$, the goal is to calculate $\hat{\boldsymbol{h}}_{t+1 \mid}$ and $\mathbf{P}_{t+1 \mid t}$
+
+Next consider forecasting the value of $\mathbf{y}_t$ :
+
+
+Notice from $[13.2 .2]$ that
+$$
+\hat{\mathbf{y}}_{t \mid t-1} \equiv E\left(\mathbf{y}_t \mid \mathbf{x}_t, \mathscr{y}_{t-1}\right)
+$$
+$$
+E\left(\mathbf{y}_t \mid \mathbf{x}_t, \boldsymbol{h}_t\right)=\mathbf{A}^{\prime} \mathbf{x}_t+\mathbf{H}^{\prime} \boldsymbol{h}_t,
+$$
+
+So, from the law of iterated projections,
+$$
+\hat{\mathbf{y}}_{t \mid t-1}=\mathbf{A}^{\prime} \mathbf{x}_t+\mathbf{H}^{\prime} \cdot \hat{E}\left(\boldsymbol{h}_t \mid \mathbf{x}_t, \mathcal{G}_{t-1}\right)=\mathbf{A}^{\prime} \mathbf{x}_t+\mathbf{H}^{\prime} \hat{h}_{t \mid t-1} \quad \text { [13.2.9] }
+$$
+
+And the error of this forecast is
+$$
+\begin{aligned}
+& \mathbf{y}_t-\hat{\mathbf{y}}_{t \mid t-1}=\mathbf{A}^{\prime} \mathbf{x}_t+\mathbf{H}^{\prime} \boldsymbol{h}_t+\mathbf{w}_t-\mathbf{A}^{\prime} \mathbf{x}_t-\mathbf{H}^{\prime} h_{t \mid t-1}=\mathbf{H}^{\prime}\left(\boldsymbol{h}_t-\boldsymbol{h}_{t \mid t-1}\right)+\mathbf{w}_t \\
+& \\\
+\end{aligned}
+$$
+With MSE 
+$$
+\begin{aligned}
+& E\left[\left(\mathbf{y}_t-\hat{\mathbf{y}}_{t \mid t-1}\right)\left(\mathbf{y}_t-\hat{\mathbf{y}}_{t \mid t-1}\right)^{\prime}\right] \\
+& =E\left[\mathbf{H}^{\prime}\left(\boldsymbol{h}_t-\boldsymbol{h}_{t \mid t-1}\right)\left(\boldsymbol{h}_t-\boldsymbol{h}_{t \mid t-t}\right)^{\prime} \mathbf{H}\right]+E\left[\mathbf{w}_t \mathbf{w}_t^{\prime}\right] \\
+&
+\end{aligned}
+$$
+Cross-product terms have disappeared, since
+$$
+E\left[\mathbf{w}_t\left(\boldsymbol{h}_t-\hat{\boldsymbol{h}}_{t \mid t-1}\right)^{\prime}\right]=0 . \quad \text { [13.2.11] }
+$$
+T
+Now let's see in general how the information is taken into the model
+in $t-1$ we know
+Yt
 
 
 
